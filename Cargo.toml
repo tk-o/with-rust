@@ -1,5 +1,5 @@
 [workspace]
-
 members = [
-    'cli-101',
+    "cli-101",
+    "marketplace",
 ]
