@@ -1,4 +1,4 @@
-# Habits and becoming proficinet
+# Habits and becoming proficient
 
 I strongly believe that becoming an expert in some field requires time and curiosity to be put it the area of interest.
 
@@ -8,4 +8,4 @@ I am writing this to keep myself accountable in the times my motivation would wa
 
 ## Trust the process
 
-I will spend at least 25 minutes everyday pushing my capabilities of capturing value with Rust programming language forward.
+I will spend at least 25 minutes, everyday, pushing my capabilities of capturing value with Rust programming language forward.
