@@ -4,7 +4,7 @@ use rand::thread_rng;
 use rand::seq::SliceRandom;
 
 struct Market {
-    sellers: HashMap<SellerId, Seller>,
+    providers: HashMap<ProviderId, Provider>,
     marketers: HashMap<MarketerId, Marketer>,
     buyers: HashMap<BuyerId, Buyer>,
 }
@@ -12,35 +12,39 @@ struct Market {
 impl Market {
     fn new() -> Self {
         Market {
-            sellers: HashMap::new(),
+            providers: HashMap::new(),
             marketers: HashMap::new(),
             buyers: HashMap::new(),
         }
     }
 }
 
-#[derive(Debug,Hash,PartialEq,Eq)]
-struct SellerId(String);
-struct Seller {
-    id: SellerId,
+#[derive(Clone,Debug,Hash,PartialEq,Eq)]
+struct ProviderId(String);
+
+#[derive(Clone)]
+struct Provider {
+    id: ProviderId,
     name: String,
 }
 
-impl Seller {
+impl Provider {
     fn new() -> Self {
         Self {
-            id: SellerId("abc".into()),
-            name: "seller name".into(),
+            id: ProviderId("provider".into()),
+            name: "Provider name".into(),
         }
     }
 
-    fn creates_supply(&self, available_items: u32) -> Supply {
-        Supply::new(self.id, available_items)
+    fn creates_supply(&self, name: String, available_items: u32) -> Supply {
+        Supply::new(self.id.clone(), name, available_items)
     }
 }
 
-#[derive(Debug,Hash,PartialEq,Eq)]
+#[derive(Clone,Debug,Hash,PartialEq,Eq)]
 struct MarketerId(String);
+
+#[derive(Clone)]
 struct Marketer {
     id: MarketerId,
     name: String,
@@ -49,26 +53,28 @@ struct Marketer {
 impl Marketer {
     fn new() -> Self {
         Marketer {
-            id: MarketerId("abc".into()),
+            id: MarketerId("marketer".into()),
             name: "Marketer name".into(),
         }
     }
 
-    /// Marketers are market makers. They pull the supply from the sellers, and put it on the market.
+    /// Marketers are market makers. They pull the supply from the Providers, and put it on the market.
     fn makes_market(self, supply: Supply) -> Option<Ad> {
         if supply.has_supply_available() == false {
             return None;
         }
 
-        // FIXME: make the state transition to be exectued
-        // supply.state = SupplyState::Marketed;
+        // make the state transition to be exectued
+        let supply = supply.set_state(SupplyState::Marketed);
 
         Some(Ad::new(self.id, supply))
     }
 }
 
-#[derive(Debug,Hash,PartialEq,Eq)]
+#[derive(Clone,Debug,Hash,PartialEq,Eq)]
 struct BuyerId(String);
+
+#[derive(Clone)]
 struct Buyer {
     id: BuyerId,
     name: String,
@@ -77,7 +83,7 @@ struct Buyer {
 impl Buyer {
     fn new(name: String) -> Self {
         Buyer {
-            id: BuyerId("abc".into()),
+            id: BuyerId("buyer".into()),
             name,
         }
     }
@@ -90,32 +96,44 @@ impl Buyer {
     }
 }
 
+type AvailableSupply = u32;
+#[derive(Debug)]
 struct Supply {
-    available_items: u32,
-    provided_by: SellerId,
+    provided_by: ProviderId,
+    name: String,
+    available_items: AvailableSupply,
     state: SupplyState,
 }
 
 impl Supply {
-    fn new(seller_id: SellerId, available_items: u32) -> Self {
+    fn new(provider_id: ProviderId, name: String, available_items: AvailableSupply) -> Self {
         Self {
-            provided_by: seller_id,
-            state: SupplyState::Created,
+            name,
             available_items,
+            provided_by: provider_id,
+            state: SupplyState::Created,
         }
     }
 
     fn has_supply_available(&self) -> bool {
         self.available_items > 0
     }
+
+    fn set_state(mut self, state: SupplyState) -> Self {
+        self.state = state;
+
+        self
+    }
 }
 
+#[derive(Debug)]
 enum SupplyState {
     Created,
     Marketed,
     Consumed,
 }
 
+#[derive(Debug)]
 struct Ad {
     marketer: MarketerId,
     supply: Supply,
@@ -130,6 +148,7 @@ impl Ad {
     }
 }
 
+#[derive(Debug)]
 struct Transaction {
     ad: Ad,
     taker: BuyerId,
@@ -141,16 +160,6 @@ impl Transaction {
             ad,
             taker: buyer_id,
         }
-    }
-
-    fn get_maker(self, market: Market) -> Option<Marketer> {
-        market.marketers.get(
-            &self.ad.marketer
-        )
-    }
-
-    fn get_taker(&self, market: Market) -> Option<Buyer> {
-        market.buyers.get(&self.taker)
     }
 }
 
@@ -171,21 +180,36 @@ mod tests {
 
     #[test]
     fn it_allows_to_create_transaction_between_market_participants() {
-        let makret = Market::new();
+        // let's create a place for actors to connect
+        let mut makret = Market::new();
 
-        // actors
-        let seller = Seller::new();
+        // now, create actors that will interact with each other
+        let provider = Provider::new();
         let marketer = Marketer::new();
         let buyer = Buyer::new("mr buyer".into());
 
-        // available supply must be defined so the market maker doesn't offer anything
-        // out of thing air
-        let ads_listing: Vec<Ad> = (0..9).into_iter().filter_map(|i| {
-            // first, a seller needs to create supply
-            let supply = seller.creates_supply(i);
-            // later, a marketer will pick up this supply and put it on the market
-            // FIXME: borrowing error
-            marketer.makes_market(supply)
+        // put the actors into the place
+        makret.providers.insert(provider.id, provider.clone());
+        makret.marketers.insert(marketer.id, marketer.clone());
+        makret.buyers.insert(buyer.id, buyer.clone());
+
+        // everyone is ready to start
+        
+        // first, the provider needs to manufacture some goods/services
+        // well, let's use some sea treasury
+        let supply = vec![
+            provider.creates_supply("amber".into(), 20),
+            provider.creates_supply("pearl".into(), 5),
+            provider.creates_supply("sea shell".into(), 100),
+        ];
+
+        // the supply is provided, so marketer can start their part of the job
+        let jewelry_ads_listing: Vec<Ad> = supply.into_iter().filter_map(|supply| {
+            if supply.available_items < 30 {
+                marketer.makes_market(supply)
+            } else {
+                None
+            }
         }).collect();
 
         // let's use some randomness!
@@ -194,9 +218,9 @@ mod tests {
         // once supply has been put on the market, it is now advertisment, or in short: an ad
         // the ad can be bid against by a buyer, which in turn creates a transaction
         // between the market maker (the marketer) and the market taker (buyer)
-        if let Some(ad) = ads_listing.choose(&mut rng) {
-            let transaction = buyer.bids(*ad);
-            println!("Tx: {:?}", transaction);
+        if let Some(ad) = jewelry_ads_listing.choose(&mut rng) {
+            // let transaction = buyer.bids(*ad);
+            println!("AD picked from the jewelry listing to be bought: {:?}", ad);
         }
     }
 }
