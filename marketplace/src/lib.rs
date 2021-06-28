@@ -2,20 +2,34 @@ use std::collections::HashMap;
 use std::fmt::{Debug};
 use rand::thread_rng;
 use rand::seq::SliceRandom;
+use crate::market::{MarketConfig, MarketState, SupplyState };
+use std::borrow::BorrowMut;
 
-struct Market {
-    providers: HashMap<ProviderId, Provider>,
-    marketers: HashMap<MarketerId, Marketer>,
-    buyers: HashMap<BuyerId, Buyer>,
+mod market;
+
+#[derive(Default)]
+struct MyTestMarket {
+    state: MarketState<MarketConfig>,
 }
 
-impl Market {
-    fn new() -> Self {
-        Market {
-            providers: HashMap::new(),
-            marketers: HashMap::new(),
-            buyers: HashMap::new(),
-        }
+impl MarketConfig for MyTestMarket {
+    type ProviderId = ProviderId;
+    type Provider = Provider;
+    type MarketerId = MarketerId;
+    type Marketer = Marketer;
+    type BuyerId = BuyerId;
+    type Buyer = Buyer;
+    type SupplyId = SupplyId;
+    type Supply = Supply;
+    type Transaction = Transaction;
+    type Advertisement = Ad;
+
+    fn state(&self) -> &MarketState<Self> {
+        &self.state
+    }
+
+    fn state_mut(&mut self) -> &mut MarketState<Self> {
+        self.state.borrow_mut()
     }
 }
 
@@ -57,18 +71,6 @@ impl Marketer {
             name: "Marketer name".into(),
         }
     }
-
-    /// Marketers are market makers. They pull the supply from the Providers, and put it on the market.
-    fn makes_market(&self, supply: &mut Supply) -> Option<Ad> {
-        if supply.has_supply_available() == false {
-            return None;
-        }
-
-        // make the state transition to be exectued
-        supply.set_state(SupplyState::Marketed);
-
-        Some(Ad::new(self.id.clone(), supply.clone()))
-    }
 }
 
 #[derive(Clone,Debug,Hash,PartialEq,Eq)]
@@ -87,20 +89,16 @@ impl Buyer {
             name,
         }
     }
-
-    fn bids(&self, ad: &mut Ad) -> Transaction {
-        // FIXME: update the state of the underlying supply
-        ad.supply.set_state(SupplyState::Consumed);
-
-        println!("ad supply {:?}", ad.supply);
-
-        Transaction::new(ad.clone(), self.id.clone())
-    }
 }
 
 type AvailableSupply = u32;
-#[derive(Clone,Debug)]
+
+#[derive(Clone,Debug,Hash,PartialEq,Eq)]
+struct SupplyId(String);
+
+#[derive(Clone,Debug,Hash,PartialEq,Eq)]
 struct Supply {
+    id: SupplyId,
     provided_by: ProviderId,
     name: String,
     available_items: AvailableSupply,
@@ -114,6 +112,7 @@ impl Supply {
             available_items,
             provided_by: provider_id,
             state: SupplyState::Created,
+            id: SupplyId("s".into()),
         }
     }
 
@@ -126,24 +125,18 @@ impl Supply {
     }
 }
 
-#[derive(Clone,Debug)]
-enum SupplyState {
-    Created,
-    Marketed,
-    Consumed,
-}
 
-#[derive(Clone,Debug)]
+#[derive(Clone,Debug,PartialEq)]
 struct Ad {
     marketer: MarketerId,
-    supply: Supply,
+    supply: SupplyId,
 }
 
 impl Ad {
-    fn new(marketer_id: MarketerId, supply: Supply) -> Self {
+    fn new(marketer_id: MarketerId, supply_id: SupplyId) -> Self {
         Self {
             marketer: marketer_id,
-            supply,
+            supply: supply_id,
         }
     }
 }
@@ -155,7 +148,7 @@ struct Transaction {
 }
 
 impl Transaction {
-    fn new(ad: Ad, buyer_id: BuyerId) -> Self {
+    fn new(buyer_id: BuyerId, ad: Ad) -> Self {
         Self {
             ad,
             taker: buyer_id,
@@ -183,58 +176,66 @@ mod tests {
     #[test]
     fn it_allows_to_create_transaction_between_market_participants() {
         // let's create a place for actors to connect
-        let mut market = Market::new();
+        let mut market = MyTestMarket::default();
 
-        // now, create actors that will interact with each other
-        let provider = Provider::new();
-        let marketer = Marketer::new();
-        let buyer = Buyer::new("mr buyer".into());
+        let state = market.state();
 
-        // put the actors into the place
-        market.providers.insert(provider.id.clone(), provider);
-        market.marketers.insert(marketer.id.clone(), marketer);
-        market.buyers.insert(buyer.id.clone(), buyer);
-
-        // everyone is ready to start
-        
-        // first, the provider needs to manufacture some goods/services
-        if let Some(selected_provider) = market.providers.get(&ProviderId("p1".into())) {
-            // well, let's use some sea treasury
-            let mut supply = vec![
-                selected_provider.creates_supply("amber".into(), 20),
-                selected_provider.creates_supply("pearl".into(), 5),
-                selected_provider.creates_supply("sea shell".into(), 100),
-            ];
-    
-            // the supply is provided, so marketer can start their part of the job
-            let mut jewelry_ads_listing: Vec<Ad> = supply.iter_mut().filter_map(|supply| {
-                if supply.available_items > 30 {
-                    return None;
-                }
-
-                match market.marketers.get(&MarketerId("m1".into())) {
-                    Some(marketer) => marketer.makes_market(supply),
-                    _ => None,
-                }
-            }).collect();
-    
-            // let's use some randomness!
-            let mut rng = thread_rng();
-    
-            // once supply has been put on the market, it is now advertisment, or in short: an ad
-            // the ad can be bid against by a buyer, which in turn creates a transaction
-            // between the market maker (the marketer) and the market taker (buyer)
-            if let Some(ad) = jewelry_ads_listing.choose_mut(&mut rng) {
-                if let Some(buyer) = market.buyers.get(&BuyerId("b1".into())) {
-                    ad.supply.set_state(SupplyState::Consumed);
-                    let transaction = buyer.bids(ad);
-                    println!("ADs from the jewelry listing: {:?}", jewelry_ads_listing);
-                    println!("TX: {:?}", transaction);
-                }
-            }
-
-            // FIXME: supply must have the statuses updated accordingly after the transaction from above
-            println!("All supply available: {:?}", supply);
-        }
+        // // now, create actors that will interact with each other
+        // let provider = Provider::new();
+        // let marketer = Marketer::new();
+        // let buyer = Buyer::new("mr buyer".into());
+        //
+        // // put the actors into the place
+        // market.providers.insert(provider.id.clone(), provider);
+        // market.marketers.insert(marketer.id.clone(), marketer);
+        // market.buyers.insert(buyer.id.clone(), buyer);
+        //
+        // // everyone is ready to start
+        //
+        // // first, the provider needs to manufacture some goods/services
+        // if let Some(selected_provider) = market.providers.get(&ProviderId("p1".into())) {
+        //     // well, let's use some sea treasury
+        //     market.supplies = vec![
+        //         selected_provider.creates_supply("amber".into(), 20),
+        //         selected_provider.creates_supply("pearl".into(), 5),
+        //         selected_provider.creates_supply("sea shell".into(), 100),
+        //     ].iter().fold(
+        //         HashMap::new(),
+        //         |mut acc, supply| {
+        //             acc.insert(supply.id.clone(), supply.to_owned());
+        //             acc
+        //         }
+        //     );
+        //
+        //     // the supply is provided, so marketer can start their part of the job
+        //     let mut jewelry_ads_listing: Vec<Ad> = market.supplies.iter_mut().filter_map(|(supply_id, supply)| {
+        //         if supply.available_items > 30 {
+        //             return None;
+        //         }
+        //
+        //         market.advertise(supply)
+        //     }).collect();
+        //
+        //     // let's use some randomness!
+        //     let mut rng = thread_rng();
+        //
+        //     // once supply has been put on the market, it is now advertisment, or in short: an ad
+        //     // the ad can be bid against by a buyer, which in turn creates a transaction
+        //     // between the market maker (the marketer) and the market taker (buyer)
+        //     if let Some(buyer) = market.buyers.get(&BuyerId("b1".into())) {
+        //         if let Some(ad) = jewelry_ads_listing.choose_mut(&mut rng) {
+        //             let supply = market.supplies.get_mut(&ad.supply);
+        //
+        //             if let Some(supply) = supply {
+        //                 let transaction = market.bid(buyer, ad);
+        //                 println!("ADs from the jewelry listing: {:?}", jewelry_ads_listing);
+        //                 println!("TX: {:?}", transaction);
+        //             }
+        //         }
+        //     }
+        //
+        //     // FIXME: supply must have the statuses updated accordingly after the transaction from above
+        //     println!("All supplies available: {:?}", market.supplies);
+        // }
     }
 }
