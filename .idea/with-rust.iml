@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/cli-101/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/marketplace/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/basic-marketplace/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/keyrings/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -68,8 +68,6 @@ mod tests {
             ],
         };
 
-        let mut all_providers = HashMap::new();
-
         // Skills-check: let's see if I understand borrow checker better
         &provider_4f.inventory.push(Supply {
             id: "4f-2".into(),
@@ -77,12 +75,14 @@ mod tests {
             quantity: 20,
         });
 
+        let mut all_providers = HashMap::new();
         all_providers.insert(&provider_4f.name, &provider_4f);
         all_providers.insert(&provider_nike.name, &provider_nike);
         all_providers.insert(&provider_adidas.name, &provider_adidas);
 
         // I'd like to push some new items to the providers' inventory here
         // Borrow checker won't let me do that, as I am mixing borrow with borrow-mut calls
+        // Mutable borrows must occur first, and then they must be followed by regular borrows only
 
         assert_eq!(&provider_4f.inventory.len(), &usize::from(2usize));
         assert_eq!(&all_providers.get(&provider_4f.name).unwrap().inventory.len(), &usize::from(2usize));
