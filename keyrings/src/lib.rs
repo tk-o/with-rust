@@ -44,7 +44,7 @@ mod tests {
         // ALICE: generates a public/private keypair to encrypt the message `m` initially
         let (alice_priv_key, alice_pub_key) = recrypt.generate_key_pair().unwrap();
 
-        // ENRICO: generate signing keys
+        // ALICE: generate signing keys for Enrico to use while he is encrypting message `n`
         let enrico_keypair = recrypt.generate_ed25519_key_pair();
 
         // Enrico encrypts a message `m` to `pk_A`
@@ -74,7 +74,7 @@ mod tests {
         ).unwrap();
 
         // TODO: understand how does Urusla know the signing keypair of Enrico? I'd mean Enrico revealing his private key!
-        // ???????
+        // Perhaps from the `alice_to_bob_transform_key` which holds it
 
         // Bob decrypts the transformed value with the his `pk_B` and gets the message `m`
         // m = decrypt(sk_B, c_B)

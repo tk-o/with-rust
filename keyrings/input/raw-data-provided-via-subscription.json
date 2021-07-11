@@ -1,1 +1,6 @@
-{"suscription_id":1,"data":{"secret":123}}
+{
+  "suscription_id": 1,
+  "data": {
+    "secret": 123
+  }
+}
