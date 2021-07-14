@@ -30,14 +30,15 @@
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/basic-marketplace/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/cargo-examples/dependencies/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/cargo-examples/runtime/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef442304-c45f-4b7b-8418-06afb0139616" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/with-rust.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/with-rust.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/caching/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/caching/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyrings/input/raw-data-provided-via-subscription.json" beforeDir="false" afterPath="$PROJECT_DIR$/keyrings/input/raw-data-provided-via-subscription.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyrings/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/keyrings/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +59,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cargo-examples" />
   </component>
   <component name="KonanWorkspace">
     <executables />
@@ -73,7 +74,7 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1uRF50RxpzeaDsOnCNkw79yngjC" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -88,9 +89,10 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/Users/tko/dev-oss/with-rust/cargo-examples/dependencies/packages/erc-1155/src/lib.rs" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::most_basic_case_works">
+  <component name="RunManager" selected="Cargo.Run contracts-runtime">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -100,6 +102,21 @@
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run contracts-runtime" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package contracts-runtime --bin contracts-runtime" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/cargo-examples/runtime" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="Test lib" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
@@ -117,9 +134,9 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test lib::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package caching --lib tests" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/basic-marketplace" />
+    <configuration name="Test tests::it_creates_a_token (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package erc-20 --lib tests::it_creates_a_token -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/cargo-examples/dependencies" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -132,24 +149,9 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::it_works (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package caching --lib tests::it_works -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/basic-marketplace" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::long_task_case_works" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package caching --lib tests::long_task_case_works -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/basic-marketplace" />
+    <configuration name="Test tests::it_creates_a_token" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package erc-1155 --lib tests::it_creates_a_token -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/cargo-examples/dependencies" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -194,11 +196,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run contracts-runtime" />
+        <item itemvalue="Cargo.Test tests::it_creates_a_token (1)" />
+        <item itemvalue="Cargo.Test tests::it_creates_a_token" />
         <item itemvalue="Cargo.Test tests::most_basic_case_works" />
         <item itemvalue="Cargo.Test lib" />
-        <item itemvalue="Cargo.Test lib::tests" />
-        <item itemvalue="Cargo.Test tests::long_task_case_works" />
-        <item itemvalue="Cargo.Test tests::it_works (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -224,7 +226,10 @@
       <workItem from="1625186519655" duration="785000" />
       <workItem from="1625220923524" duration="2495000" />
       <workItem from="1625392927925" duration="14213000" />
-      <workItem from="1625741007318" duration="12107000" />
+      <workItem from="1625741007318" duration="12381000" />
+      <workItem from="1626141730620" duration="579000" />
+      <workItem from="1626221447644" duration="3000" />
+      <workItem from="1626259479160" duration="2601000" />
     </task>
     <task id="LOCAL-00001" summary="chore(pre-scheme): update the example&#10;&#10;Proxy re-encryption scheme is quite complicated. So far I've got a piece of code to encrypt/decrypt data, using AES algorithm. I've also got the data encryption key part to work, that enables transforming public key attached to the encrypted data. I will need to connect these two pieces together.">
       <created>1625569474450</created>
@@ -233,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625569474450</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat(caching): define generic struct&#10;&#10;The generic struct is a host for a computation closure, and arguments. Right now it also stores the result of calling the computation, but it should be refactored into some cache object.">
+      <created>1625981097639</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1625981097639</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,10 +291,15 @@
     <state x="709" y="280" key="#com.intellij.ide.util.MemberChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1624862660418" />
     <state x="709" y="299" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1095@0.25.1792.1095" timestamp="1624870055259" />
     <state x="-1160" y="289" key="#com.intellij.ide.util.MemberChooser/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625973521445" />
-    <state x="648" y="280" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1624847671534">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="-1385" y="221" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1626260139711">
+      <screen x="-1920" y="25" width="1920" height="1055" />
+    </state>
+    <state x="-1385" y="221" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626260139711" />
+    <state x="-1272" y="299" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1625981218335">
+      <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state x="648" y="280" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624847671534" />
+    <state x="-1272" y="299" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981218335" />
     <state x="-920" y="495" key="#xdebugger.evaluate" timestamp="1625916472968">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
@@ -291,7 +308,7 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="709" y="389" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1080/-1920.25.1920.1055/-867.1105.1792.1095@0.0.1920.1080" timestamp="1625213136575" />
-    <state width="939" height="286" key="GridCell.Tab.0.bottom" timestamp="1625981057044">
+    <state width="1878" height="286" key="GridCell.Tab.0.bottom" timestamp="1626261749734">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149847" />
@@ -299,8 +316,8 @@
     <state width="939" height="376" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989319" />
     <state width="875" height="374" key="GridCell.Tab.0.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811666" />
     <state width="875" height="286" key="GridCell.Tab.0.bottom/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256376" />
-    <state width="939" height="286" key="GridCell.Tab.0.bottom/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981057044" />
-    <state width="939" height="286" key="GridCell.Tab.0.center" timestamp="1625981057043">
+    <state width="1878" height="286" key="GridCell.Tab.0.bottom/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
+    <state width="1878" height="286" key="GridCell.Tab.0.center" timestamp="1626261749734">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149846" />
@@ -308,8 +325,8 @@
     <state width="939" height="376" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989318" />
     <state width="875" height="374" key="GridCell.Tab.0.center/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811665" />
     <state width="875" height="286" key="GridCell.Tab.0.center/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256375" />
-    <state width="939" height="286" key="GridCell.Tab.0.center/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981057043" />
-    <state width="939" height="286" key="GridCell.Tab.0.left" timestamp="1625981057042">
+    <state width="1878" height="286" key="GridCell.Tab.0.center/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
+    <state width="1878" height="286" key="GridCell.Tab.0.left" timestamp="1626261749733">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149846" />
@@ -317,8 +334,8 @@
     <state width="939" height="376" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989317" />
     <state width="875" height="374" key="GridCell.Tab.0.left/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811664" />
     <state width="875" height="286" key="GridCell.Tab.0.left/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256375" />
-    <state width="939" height="286" key="GridCell.Tab.0.left/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981057042" />
-    <state width="939" height="286" key="GridCell.Tab.0.right" timestamp="1625981057043">
+    <state width="1878" height="286" key="GridCell.Tab.0.left/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749733" />
+    <state width="1878" height="286" key="GridCell.Tab.0.right" timestamp="1626261749734">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149847" />
@@ -326,8 +343,8 @@
     <state width="939" height="376" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989319" />
     <state width="875" height="374" key="GridCell.Tab.0.right/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811665" />
     <state width="875" height="286" key="GridCell.Tab.0.right/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256376" />
-    <state width="939" height="286" key="GridCell.Tab.0.right/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981057043" />
-    <state width="939" height="337" key="GridCell.Tab.1.bottom" timestamp="1625980737744">
+    <state width="1878" height="286" key="GridCell.Tab.0.right/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
+    <state width="939" height="337" key="GridCell.Tab.1.bottom" timestamp="1625981342793">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="391" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1625137837338" />
@@ -335,8 +352,8 @@
     <state width="939" height="376" key="GridCell.Tab.1.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989322" />
     <state width="875" height="374" key="GridCell.Tab.1.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811670" />
     <state width="875" height="337" key="GridCell.Tab.1.bottom/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625566144517" />
-    <state width="939" height="337" key="GridCell.Tab.1.bottom/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625980737744" />
-    <state width="939" height="337" key="GridCell.Tab.1.center" timestamp="1625980737744">
+    <state width="939" height="337" key="GridCell.Tab.1.bottom/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981342793" />
+    <state width="939" height="337" key="GridCell.Tab.1.center" timestamp="1625981342793">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="391" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1625137837337" />
@@ -344,8 +361,8 @@
     <state width="939" height="376" key="GridCell.Tab.1.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989321" />
     <state width="875" height="374" key="GridCell.Tab.1.center/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811668" />
     <state width="875" height="337" key="GridCell.Tab.1.center/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625566144516" />
-    <state width="939" height="337" key="GridCell.Tab.1.center/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625980737744" />
-    <state width="939" height="337" key="GridCell.Tab.1.left" timestamp="1625980737744">
+    <state width="939" height="337" key="GridCell.Tab.1.center/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981342793" />
+    <state width="939" height="337" key="GridCell.Tab.1.left" timestamp="1625981342793">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="391" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1625137837336" />
@@ -353,8 +370,8 @@
     <state width="939" height="376" key="GridCell.Tab.1.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989320" />
     <state width="875" height="374" key="GridCell.Tab.1.left/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811668" />
     <state width="875" height="337" key="GridCell.Tab.1.left/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625566144516" />
-    <state width="939" height="337" key="GridCell.Tab.1.left/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625980737744" />
-    <state width="939" height="337" key="GridCell.Tab.1.right" timestamp="1625980737744">
+    <state width="939" height="337" key="GridCell.Tab.1.left/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981342793" />
+    <state width="939" height="337" key="GridCell.Tab.1.right" timestamp="1625981342793">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state width="875" height="391" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1625137837338" />
@@ -362,17 +379,18 @@
     <state width="939" height="376" key="GridCell.Tab.1.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989321" />
     <state width="875" height="374" key="GridCell.Tab.1.right/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811669" />
     <state width="875" height="337" key="GridCell.Tab.1.right/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625566144517" />
-    <state width="939" height="337" key="GridCell.Tab.1.right/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625980737744" />
-    <state x="496" y="329" key="Vcs.Push.Dialog.v2" timestamp="1625569512860">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state width="939" height="337" key="GridCell.Tab.1.right/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981342793" />
+    <state x="-1424" y="329" key="Vcs.Push.Dialog.v2" timestamp="1625981137090">
+      <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state x="496" y="329" key="Vcs.Push.Dialog.v2/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625569512860" />
-    <state x="-1172" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1625979894629">
+    <state x="-1424" y="329" key="Vcs.Push.Dialog.v2/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981137090" />
+    <state x="-1172" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1625981165674">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state x="698" y="510" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1095@0.25.1792.1095" timestamp="1625136637391" />
     <state x="748" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625562214413" />
-    <state x="-1172" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625979894629" />
+    <state x="-1172" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981165674" />
     <state x="640" y="206" width="640" height="693" key="find.popup" timestamp="1625568437456">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
@@ -383,11 +401,11 @@
     </state>
     <state x="569" y="184" key="new project wizard/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625212980025" />
     <state x="531" y="212" key="new project wizard/0.25.1792.1095@0.25.1792.1095" timestamp="1625133207845" />
-    <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup" timestamp="1625974656077">
+    <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup" timestamp="1626260143846">
       <screen x="-1920" y="25" width="1920" height="1055" />
     </state>
     <state x="561" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625562232594" />
-    <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625974656077" />
+    <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626260143846" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

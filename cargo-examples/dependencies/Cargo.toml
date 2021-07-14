@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "packages/erc20",
+    "packages/erc-1155",
+]

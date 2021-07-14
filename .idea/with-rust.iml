@@ -8,6 +8,10 @@
       <sourceFolder url="file://$MODULE_DIR$/basic-marketplace/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/keyrings/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/caching/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc-1155/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc-20/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/target" />
+      <excludeFolder url="file://$MODULE_DIR$/cargo-examples/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -6,3 +6,8 @@ members = [
     "keyrings",
     "caching",
 ]
+
+exclude = [
+    "cargo-examples/dependencies",
+    "cargo-examples/runtime",
+]

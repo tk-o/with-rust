@@ -1,0 +1,10 @@
+[package]
+name = "erc_1155"
+version = "0.1.0"
+authors = ["Tomasz Kopacki <tomasz@kopacki.net>"]
+edition = "2018"
+include = ["/Cargo.toml", "src/**/*.rs", "/README.md", "/LICENSE"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]

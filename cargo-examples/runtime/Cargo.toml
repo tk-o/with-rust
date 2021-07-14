@@ -1,0 +1,28 @@
+[package]
+name = "contracts-runtime"
+version = "0.1.0"
+authors = ["Tomasz Kopacki <tomasz@kopacki.net>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+erc_20 = { path = "../dependencies/packages/erc20", version = "0.1.0" }
+erc_1155 = { path = "../dependencies/packages/erc-1155", version = "0.1.0" }
+
+# TODO: prepare an example of loading a library from a top-level workspace
+# TODO: check if there's a difference while loading a dependency via `git` instead of `path`
+#erc_1155 = { path = "../dependencies", version = "0.1.0" }
+
+# As of now, there's an error:
+#
+#error: failed to get `erc_1155` as a dependency of package `contracts-runtime v0.1.0 (/Users/tko/dev-oss/with-rust/cargo-examples/runtime)`
+#
+#Caused by:
+#  failed to load source for dependency `erc_1155`
+#
+#Caused by:
+#  Unable to update /Users/tko/dev-oss/with-rust/cargo-examples/dependencies
+#
+#Caused by:
+#  found a virtual manifest at `/Users/tko/dev-oss/with-rust/cargo-examples/dependencies/Cargo.toml` instead of a package manifest
