@@ -35,10 +35,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef442304-c45f-4b7b-8418-06afb0139616" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/with-rust.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/with-rust.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cargo-examples" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KonanWorkspace">
     <executables />
@@ -86,11 +83,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cargo-examples/dependencies" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/Users/tko/dev-oss/with-rust/cargo-examples/dependencies/packages/erc-1155/src/lib.rs" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cargo-examples/dependencies" />
+    </key>
   </component>
   <component name="RunManager" selected="Cargo.Run contracts-runtime">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
@@ -229,7 +231,7 @@
       <workItem from="1625741007318" duration="12381000" />
       <workItem from="1626141730620" duration="579000" />
       <workItem from="1626221447644" duration="3000" />
-      <workItem from="1626259479160" duration="2601000" />
+      <workItem from="1626259479160" duration="4048000" />
     </task>
     <task id="LOCAL-00001" summary="chore(pre-scheme): update the example&#10;&#10;Proxy re-encryption scheme is quite complicated. So far I've got a piece of code to encrypt/decrypt data, using AES algorithm. I've also got the data encryption key part to work, that enables transforming public key attached to the encrypted data. I will need to connect these two pieces together.">
       <created>1625569474450</created>
@@ -391,6 +393,10 @@
     <state x="698" y="510" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1095@0.25.1792.1095" timestamp="1625136637391" />
     <state x="748" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625562214413" />
     <state x="-1172" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1625981165674" />
+    <state x="900" y="448" width="1165" height="678" key="dock-window-1" timestamp="1626343211705">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state x="900" y="448" width="1165" height="678" key="dock-window-1/0.25.1792.1095@0.25.1792.1095" timestamp="1626343211705" />
     <state x="640" y="206" width="640" height="693" key="find.popup" timestamp="1625568437456">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>

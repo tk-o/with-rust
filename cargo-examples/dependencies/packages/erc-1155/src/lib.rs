@@ -1,11 +1,11 @@
-struct Erc1155(String);
+pub struct Erc1155(String);
 
 impl Erc1155 {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self("Hello from ERC-1155".into())
     }
 
-    fn name(&self) -> &str {
+    pub fn name(&self) -> &str {
         &self.0
     }
 }
