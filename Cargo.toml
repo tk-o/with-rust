@@ -10,4 +10,5 @@ members = [
 exclude = [
     "cargo-examples/dependencies",
     "cargo-examples/runtime",
+    "smart-contractss",
 ]

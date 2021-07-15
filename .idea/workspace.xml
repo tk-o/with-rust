@@ -36,6 +36,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ef442304-c45f-4b7b-8418-06afb0139616" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,18 +80,25 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cargo-examples/dependencies" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/smart-contracts/erc-20/contracts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/Users/tko/dev-oss/with-rust/cargo-examples/dependencies/packages/erc-1155/src/lib.rs" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/smart-contracts/erc-20/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/smart-contracts/erc-20/contracts/erc-20" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/smart-contracts/erc-20/contracts" />
       <recent name="$PROJECT_DIR$/cargo-examples/dependencies" />
     </key>
   </component>
@@ -231,7 +239,7 @@
       <workItem from="1625741007318" duration="12381000" />
       <workItem from="1626141730620" duration="579000" />
       <workItem from="1626221447644" duration="3000" />
-      <workItem from="1626259479160" duration="4048000" />
+      <workItem from="1626259479160" duration="7428000" />
     </task>
     <task id="LOCAL-00001" summary="chore(pre-scheme): update the example&#10;&#10;Proxy re-encryption scheme is quite complicated. So far I've got a piece of code to encrypt/decrypt data, using AES algorithm. I've also got the data encryption key part to work, that enables transforming public key attached to the encrypted data. I will need to connect these two pieces together.">
       <created>1625569474450</created>
@@ -278,6 +286,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="chore(pre-scheme): update the example&#10;&#10;Proxy re-encryption scheme is quite complicated. So far I've got a piece of code to encrypt/decrypt data, using AES algorithm. I've also got the data encryption key part to work, that enables transforming public key attached to the encrypted data. I will need to connect these two pieces together." />
     <MESSAGE value="feat(caching): define generic struct&#10;&#10;The generic struct is a host for a computation closure, and arguments. Right now it also stores the result of calling the computation, but it should be refactored into some cache object." />
     <option name="LAST_COMMIT_MESSAGE" value="feat(caching): define generic struct&#10;&#10;The generic struct is a host for a computation closure, and arguments. Right now it also stores the result of calling the computation, but it should be refactored into some cache object." />
@@ -310,40 +319,40 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="709" y="389" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1080/-1920.25.1920.1055/-867.1105.1792.1095@0.0.1920.1080" timestamp="1625213136575" />
-    <state width="1878" height="286" key="GridCell.Tab.0.bottom" timestamp="1626261749734">
-      <screen x="-1920" y="25" width="1920" height="1055" />
+    <state width="1750" height="299" key="GridCell.Tab.0.bottom" timestamp="1626343371605">
+      <screen x="0" y="25" width="1792" height="1095" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149847" />
     <state width="939" height="304" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625399506579" />
     <state width="939" height="376" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989319" />
-    <state width="875" height="374" key="GridCell.Tab.0.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811666" />
+    <state width="1750" height="299" key="GridCell.Tab.0.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1626343371605" />
     <state width="875" height="286" key="GridCell.Tab.0.bottom/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256376" />
     <state width="1878" height="286" key="GridCell.Tab.0.bottom/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
-    <state width="1878" height="286" key="GridCell.Tab.0.center" timestamp="1626261749734">
-      <screen x="-1920" y="25" width="1920" height="1055" />
+    <state width="1750" height="299" key="GridCell.Tab.0.center" timestamp="1626343371604">
+      <screen x="0" y="25" width="1792" height="1095" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149846" />
     <state width="939" height="304" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625399506577" />
     <state width="939" height="376" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989318" />
-    <state width="875" height="374" key="GridCell.Tab.0.center/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811665" />
+    <state width="1750" height="299" key="GridCell.Tab.0.center/0.25.1792.1095@0.25.1792.1095" timestamp="1626343371604" />
     <state width="875" height="286" key="GridCell.Tab.0.center/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256375" />
     <state width="1878" height="286" key="GridCell.Tab.0.center/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
-    <state width="1878" height="286" key="GridCell.Tab.0.left" timestamp="1626261749733">
-      <screen x="-1920" y="25" width="1920" height="1055" />
+    <state width="1750" height="299" key="GridCell.Tab.0.left" timestamp="1626343371604">
+      <screen x="0" y="25" width="1792" height="1095" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149846" />
     <state width="939" height="304" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625399506576" />
     <state width="939" height="376" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989317" />
-    <state width="875" height="374" key="GridCell.Tab.0.left/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811664" />
+    <state width="1750" height="299" key="GridCell.Tab.0.left/0.25.1792.1095@0.25.1792.1095" timestamp="1626343371604" />
     <state width="875" height="286" key="GridCell.Tab.0.left/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256375" />
     <state width="1878" height="286" key="GridCell.Tab.0.left/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749733" />
-    <state width="1878" height="286" key="GridCell.Tab.0.right" timestamp="1626261749734">
-      <screen x="-1920" y="25" width="1920" height="1055" />
+    <state width="1750" height="299" key="GridCell.Tab.0.right" timestamp="1626343371605">
+      <screen x="0" y="25" width="1792" height="1095" />
     </state>
     <state width="875" height="318" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1625138149847" />
     <state width="939" height="304" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625399506578" />
     <state width="939" height="376" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1624702989319" />
-    <state width="875" height="374" key="GridCell.Tab.0.right/0.25.1792.1095@0.25.1792.1095" timestamp="1625220811665" />
+    <state width="1750" height="299" key="GridCell.Tab.0.right/0.25.1792.1095@0.25.1792.1095" timestamp="1626343371605" />
     <state width="875" height="286" key="GridCell.Tab.0.right/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568256376" />
     <state width="1878" height="286" key="GridCell.Tab.0.right/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626261749734" />
     <state width="939" height="337" key="GridCell.Tab.1.bottom" timestamp="1625981342793">
@@ -397,19 +406,24 @@
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
     <state x="900" y="448" width="1165" height="678" key="dock-window-1/0.25.1792.1095@0.25.1792.1095" timestamp="1626343211705" />
-    <state x="640" y="206" width="640" height="693" key="find.popup" timestamp="1625568437456">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state x="597" y="192" width="673" height="735" key="find.popup" timestamp="1626347929585">
+      <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="597" y="192" width="597" height="735" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1624861095386" />
+    <state x="597" y="192" width="673" height="735" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1626347929585" />
     <state x="640" y="206" width="640" height="693" key="find.popup/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625568437456" />
     <state x="569" y="184" key="new project wizard" timestamp="1625212980025">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="569" y="184" key="new project wizard/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1625212980025" />
     <state x="531" y="212" key="new project wizard/0.25.1792.1095@0.25.1792.1095" timestamp="1625133207845" />
-    <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup" timestamp="1626260143846">
-      <screen x="-1920" y="25" width="1920" height="1055" />
+    <state x="647" y="337" key="refactoring.ChangeSignatureDialog" timestamp="1626347496476">
+      <screen x="0" y="0" width="1792" height="1120" />
     </state>
+    <state x="647" y="337" key="refactoring.ChangeSignatureDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1626347496476" />
+    <state x="524" y="291" width="670" height="718" key="search.everywhere.popup" timestamp="1626347662428">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="524" y="291" width="670" height="718" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1626347662428" />
     <state x="561" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625562232594" />
     <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626260143846" />
   </component>
