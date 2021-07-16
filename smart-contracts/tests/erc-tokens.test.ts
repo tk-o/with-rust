@@ -26,11 +26,8 @@ describe("ERC tokens", () => {
 
   it("Assigns initial balance", async () => {
     const erc20 = await setup('erc20');
-    const erc721 = await setup('erc721');
     const resultErc20 = await erc20.contract.query.balanceOf(erc20.sender.address);
     expect(resultErc20.output).to.equal(1000);
-    const resultErc721 = await erc721.contract.query.balanceOf(erc721.sender.address);
-    expect(resultErc721.output).to.equal(1000);
   });
 
   it("Transfer adds amount to destination account", async () => {
