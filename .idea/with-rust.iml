@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/caching/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc-1155/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc20/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/proxy/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/target" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/smart-contracts/contracts/proxy/target" />

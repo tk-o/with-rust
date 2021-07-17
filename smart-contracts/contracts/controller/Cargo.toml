@@ -16,8 +16,13 @@ scale-info = { version = "0.6", default-features = false, features = ["derive"],
 
 [lib]
 name = "controller"
-path = "lib.rs"
-crate-type = ["cdylib"]
+path = "src/lib.rs"
+crate-type = [
+    # Used for normal contract Wasm blobs.
+    "cdylib",
+    # Used for ABI generation.
+    "rlib",
+]
 
 [features]
 default = ["std"]

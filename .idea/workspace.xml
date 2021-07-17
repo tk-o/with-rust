@@ -36,14 +36,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef442304-c45f-4b7b-8418-06afb0139616" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/smart-contracts/contracts/proxy/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/smart-contracts/contracts/proxy/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/smart-contracts/scripts/deploy-proxy-example.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/with-rust.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/with-rust.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/erc-721/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/controller/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/erc-721/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/controller/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smart-contracts/tests/erc-tokens.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/tests/erc-tokens.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/controller/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/controller/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/controller/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/controller/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/proxy/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/proxy/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smart-contracts/contracts/proxy/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/smart-contracts/contracts/proxy/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +91,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/smart-contracts/contracts/proxy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/smart-contracts/scripts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/Users/tko/dev-oss/with-rust/cargo-examples/dependencies/packages/erc-1155/src/lib.rs" value="true" />
@@ -101,10 +100,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/smart-contracts/contracts/proxy/src" />
+      <recent name="$PROJECT_DIR$/smart-contracts/contracts/controller/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/smart-contracts/erc-20/contracts/erc-20" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/smart-contracts/scripts" />
       <recent name="$PROJECT_DIR$/smart-contracts/contracts/proxy" />
       <recent name="$PROJECT_DIR$/smart-contracts/contracts/controller" />
       <recent name="$PROJECT_DIR$/smart-contracts/erc-20/contracts" />
@@ -429,10 +431,11 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="647" y="337" key="refactoring.ChangeSignatureDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1626347496476" />
-    <state x="524" y="291" width="670" height="718" key="search.everywhere.popup" timestamp="1626347662428">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state x="561" y="281" width="718" height="693" key="search.everywhere.popup" timestamp="1626504002643">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="524" y="291" width="670" height="718" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1626347662428" />
+    <state x="561" y="281" width="718" height="693" key="search.everywhere.popup/0.0.1920.1080/-1920.0.1920.1080/-867.1080.1792.1120@0.0.1920.1080" timestamp="1626504002643" />
     <state x="561" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055/-867.1105.1792.1095@0.25.1920.1055" timestamp="1625562232594" />
     <state x="-1359" y="299" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055/-1920.25.1920.1055@-1920.25.1920.1055" timestamp="1626260143846" />
   </component>
