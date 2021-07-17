@@ -13,7 +13,9 @@
       <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/proxy/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/target" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/runtime" />
+      <excludeFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target" />
       <excludeFolder url="file://$MODULE_DIR$/smart-contracts/contracts/proxy/target" />
+      <excludeFolder url="file://$MODULE_DIR$/smart-contracts/contracts/tko_interfaces/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
