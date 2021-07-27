@@ -11,6 +11,27 @@
       <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc-1155/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/packages/erc20/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/proxy/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/libc-718112b9e758b7aa/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/serde-3c2e2e75402643d0/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/serde_derive-e0495e2078fa13ab/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/proc-macro2-1ffda212c53f5ceb/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/syn-c51e817971fa8ee4/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/radium-80ca7489d41859a1/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/wee_alloc-b068810ef987c179/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/libc-e9a52472a0cf87a6/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/getrandom-4c888518851dda32/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/num-traits-3236691123733a61/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/generic-array-17745142466c5c12/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/typenum-6ed958e01c1be6c8/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/serde_json-dd38c5670e8e2722/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/ryu-40f83b0ddf5bb635/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/cast-de405d927afed4d9/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/memchr-11bf461d3eee6017/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/bitflags-30f48c2e0bd4c8a8/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/rayon-d0fb43de49fb783e/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/memoffset-b61650eb9c489d23/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/crossbeam-utils-a4c84da4d58789bf/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target/debug/build/rayon-core-e05b4e3e48d66a27/out" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/dependencies/target" />
       <excludeFolder url="file://$MODULE_DIR$/cargo-examples/runtime" />
       <excludeFolder url="file://$MODULE_DIR$/smart-contracts/contracts/erc-20/target" />
