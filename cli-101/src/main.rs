@@ -20,25 +20,29 @@ fn main() {
     println!("Hello, Mr {:?}, greetings from version: {:?}", settings_path, &settings);
 
     let cwd = env::current_dir().expect("cwd is defined");
-    let output_path = cwd.join(&settings.output.path);
+
+    let local_output_path = match settings {
+        Settings::Output { path ,} => path,
+        _ => panic!("Unknown settings type"),
+    };
+
+    let output_path = cwd.join(&local_output_path);
 
     if !&output_path.exists() {
         create_dir(&output_path);
     }
 
     let mut output_file = File::create(
-        cwd.join(&settings.output.path).join("result.md")
+        cwd.join(&output_path).join("result.md")
     ).expect("Output file is created");
 
     output_file.write_all(b"# my two bytes");
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Settings {
-    output: SettingsOutput,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct SettingsOutput {
-    path: String,
+#[serde(rename_all = "camelCase")]
+enum Settings {
+    Output {
+        path: String,
+    },
 }
