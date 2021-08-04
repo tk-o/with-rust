@@ -5,6 +5,7 @@ members = [
     "basic-marketplace",
     "keyrings",
     "caching",
+    "grepy",
 ]
 
 exclude = [
