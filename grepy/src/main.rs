@@ -1,29 +1,62 @@
 use std::collections::HashMap;
+use std::borrow::Borrow;
+use std::collections::hash_map::Entry;
+use std::ops::Deref;
 
 fn main() {
     let search_term = "are";
     let quote = THE_QUOTE;
 
-    let matches = Grepy::find_matches(&search_term, &quote);
+    let mut grepy = Grepy::new();
+    let matches = grepy.find_matches(&search_term, &quote);
 
     println!("Matches: {:?}", matches);
 }
 
-struct Grepy;
+#[derive(Default)]
+struct Grepy<'a> {
+    /// Matches: exact lines
+    simple_matches: HashMap<u32, &'a str>,
+    /// Matches: exact lines and their surrounding lines
+    extended_matches: HashMap<u32, Vec<&'a str>>,
+}
 
-impl Grepy {
-    fn find_matches<'a>(needle: &'a str, haystack: &'a str) -> HashMap<u32, &'a str> {
-        let mut matches = HashMap::new();
+impl<'a> Grepy<'a> {
+    fn new() -> Self {
+        Default::default()
+    }
+
+    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &HashMap<u32, &'a str> {
+        let mut simple_matches = HashMap::new();
+
+        self.find_matches_extended(needle, haystack, 0).iter().for_each(|(k, v)| {
+            // FIXME: sort out the type for value
+            simple_matches.insert(k.to_owned(), v.get(0).unwrap());
+        });
+
+        self.simple_matches = simple_matches;
+
+        self.simple_matches.borrow()
+    }
+
+    fn find_matches_extended(&mut self, needle: &'a str, haystack: &'a str, surrounding_lines_count: usize) -> &HashMap<u32, Vec<&'a str>> {
+        let mut extended_matches = HashMap::new();
+        let mut extended_line_ranges: Vec<(u32, u32)> = Vec::new();
 
         for (i, line) in haystack.lines().enumerate() {
+            let line_extended_matched = Vec::with_capacity(surrounding_lines_count);
+
             if line.contains(&needle) {
                 let line_number = i as u32 + 1;
-                matches.insert(line_number, line);
+                extended_matches.insert(line_number, line_extended_matched);
             }
         }
 
-        matches
+        self.extended_matches = extended_matches;
+
+        self.extended_matches.borrow()
     }
+
 }
 
 #[cfg(test)]
@@ -32,25 +65,44 @@ mod test {
 
     #[test]
     fn it_finds_results_by_exact_match_when_available() {
+        let mut grepy = Grepy::new();
+        let matches = grepy.find_matches("are", THE_QUOTE);
+
+        // check number of matches
+        assert_eq!(matches.len(), 3);
+
+        // check a match contents and line
         assert_eq!(
-            Grepy::find_matches("are", THE_QUOTE).len(),
-            3,
+            matches.get(&9).unwrap(),
+            &"the issue is a complex one, that there are many factors to be considered,",
         );
 
         assert_eq!(
-            Grepy::find_matches("ambitious", THE_QUOTE).len(),
+            grepy.find_matches("ambitious", THE_QUOTE).len(),
             1,
         );
     }
 
     #[test]
     fn it_finds_no_results_by_when_not_available() {
-        let matches = Grepy::find_matches("are not", THE_QUOTE);
+        let mut grepy = Grepy::new();
+        let matches = grepy.find_matches("are not", THE_QUOTE);
 
         assert_eq!(matches.len(), 0);
     }
+
+    #[test]
+    fn it_includes_surrounding_lines_for_context_when_needed() {
+        let mut grepy = Grepy::new();
+
+        let matches = grepy.find_matches_extended("example", THE_QUOTE);
+
+        assert_eq!(matches.len(), 0);
+
+    }
 }
 
+/// Source: http://www.paulgraham.com/useful.html
 const THE_QUOTE: &str = "\
 What should an essay be?
 
