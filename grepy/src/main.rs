@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 use std::borrow::Borrow;
-use std::collections::hash_map::Entry;
-use std::ops::Deref;
 
 fn main() {
     let search_term = "are";
@@ -30,8 +28,7 @@ impl<'a> Grepy<'a> {
         let mut simple_matches = HashMap::new();
 
         self.find_matches_extended(needle, haystack, 0).iter().for_each(|(k, v)| {
-            // FIXME: sort out the type for value
-            simple_matches.insert(k.to_owned(), v.get(0).unwrap());
+            simple_matches.insert(k.to_owned(), *v.get(0).unwrap());
         });
 
         self.simple_matches = simple_matches;
@@ -41,13 +38,15 @@ impl<'a> Grepy<'a> {
 
     fn find_matches_extended(&mut self, needle: &'a str, haystack: &'a str, surrounding_lines_count: usize) -> &HashMap<u32, Vec<&'a str>> {
         let mut extended_matches = HashMap::new();
-        let mut extended_line_ranges: Vec<(u32, u32)> = Vec::new();
 
         for (i, line) in haystack.lines().enumerate() {
-            let line_extended_matched = Vec::with_capacity(surrounding_lines_count);
 
             if line.contains(&needle) {
+                let mut line_extended_matched = Vec::with_capacity(surrounding_lines_count);
                 let line_number = i as u32 + 1;
+
+                line_extended_matched.push(line);
+
                 extended_matches.insert(line_number, line_extended_matched);
             }
         }
@@ -95,9 +94,9 @@ mod test {
     fn it_includes_surrounding_lines_for_context_when_needed() {
         let mut grepy = Grepy::new();
 
-        let matches = grepy.find_matches_extended("example", THE_QUOTE);
+        let matches = grepy.find_matches_extended("example", THE_QUOTE, 1);
 
-        assert_eq!(matches.len(), 0);
+        assert_eq!(matches.len(), 2);
 
     }
 }
