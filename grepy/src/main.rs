@@ -14,9 +14,9 @@ fn main() {
 #[derive(Default)]
 struct Grepy<'a> {
     /// Matches: exact lines
-    simple_matches: HashMap<u32, &'a str>,
+    simple_matches: HashMap<usize, &'a str>,
     /// Matches: exact lines and their surrounding lines
-    extended_matches: HashMap<u32, Vec<&'a str>>,
+    extended_matches: HashMap<usize, Vec<&'a str>>,
 }
 
 impl<'a> Grepy<'a> {
@@ -24,7 +24,7 @@ impl<'a> Grepy<'a> {
         Default::default()
     }
 
-    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &HashMap<u32, &'a str> {
+    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &HashMap<usize, &'a str> {
         let mut simple_matches = HashMap::new();
 
         self.find_matches_extended(needle, haystack, 0).iter().for_each(|(k, v)| {
@@ -36,18 +36,49 @@ impl<'a> Grepy<'a> {
         self.simple_matches.borrow()
     }
 
-    fn find_matches_extended(&mut self, needle: &'a str, haystack: &'a str, surrounding_lines_count: usize) -> &HashMap<u32, Vec<&'a str>> {
-        let mut extended_matches = HashMap::new();
+    fn find_matches_extended(&mut self, needle: &'a str, haystack: &'a str, surrounding_lines_count: usize) -> &HashMap<usize, Vec<&'a str>> {
+        let mut matched_lines: Vec<GrepyMatch> = Vec::new();
 
+        // first, let's see which lines are relevant for the matching operation
         for (i, line) in haystack.lines().enumerate() {
-
             if line.contains(&needle) {
-                let mut line_extended_matched = Vec::with_capacity(surrounding_lines_count);
-                let line_number = i as u32 + 1;
+                let matched_line = match surrounding_lines_count {
+                    0 => GrepyMatch::SimpleMatch(i),
+                    _ => GrepyMatch::ExtendedMatch(
+                        i.saturating_sub(surrounding_lines_count),
+                        i.saturating_add(surrounding_lines_count),
+                    ),
+                };
 
-                line_extended_matched.push(line);
+                matched_lines.push(matched_line);
+            }
+        }
 
-                extended_matches.insert(line_number, line_extended_matched);
+        let mut extended_matches = HashMap::new();
+        let lines_per_match = surrounding_lines_count * 2 + 1;
+
+        // once all the matches are defined by line numbers, let's have the lines extracted
+        for (i, line) in haystack.lines().enumerate() {
+            for matched_line in matched_lines.iter() {
+                let mut output_lines = Vec::with_capacity(lines_per_match);
+
+                match *matched_line {
+                    GrepyMatch::SimpleMatch(line_idx) => {
+                        if i == line_idx {
+                            output_lines.push(line);
+                            extended_matches.insert(line_idx, output_lines);
+                        }
+                    },
+                    GrepyMatch::ExtendedMatch(line_idx_from, line_idx_to) => {
+                        if i >= line_idx_from || i <= line_idx_to {
+                            output_lines.push(line)
+                        }
+
+                        if i == line_idx_to {
+                            extended_matches.insert(line_idx_to - surrounding_lines_count, output_lines);
+                        }
+                    },
+                }
             }
         }
 
@@ -55,7 +86,11 @@ impl<'a> Grepy<'a> {
 
         self.extended_matches.borrow()
     }
+}
 
+enum GrepyMatch {
+    SimpleMatch(usize),
+    ExtendedMatch(usize, usize),
 }
 
 #[cfg(test)]
@@ -72,7 +107,7 @@ mod test {
 
         // check a match contents and line
         assert_eq!(
-            matches.get(&9).unwrap(),
+            matches.get(&8).unwrap(),
             &"the issue is a complex one, that there are many factors to be considered,",
         );
 
@@ -93,11 +128,31 @@ mod test {
     #[test]
     fn it_includes_surrounding_lines_for_context_when_needed() {
         let mut grepy = Grepy::new();
+        let surrounding_lines_count = 1;
+        let lines_per_match = surrounding_lines_count * 2 + 1;
 
-        let matches = grepy.find_matches_extended("example", THE_QUOTE, 1);
+        let matches = grepy.find_matches_extended(
+            "example",
+            THE_QUOTE,
+            surrounding_lines_count
+        );
 
         assert_eq!(matches.len(), 2);
 
+        matches.iter().for_each(|(_, v)| {
+            assert!(v.len() <= lines_per_match);
+            assert_eq!(v.capacity(), lines_per_match);
+        });
+
+        let first_match = matches.get(&7).unwrap().clone();
+
+        assert_eq!(
+            format!("{:?}", first_match.join("")),
+            "\
+It's easy to make a statement correct by making it vague. That's a common flaw in academic writing,
+for example. If you know nothing at all about an issue, you can't go wrong by saying that
+the issue is a complex one, that there are many factors to be considered,"
+        );
     }
 }
 
