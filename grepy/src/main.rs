@@ -1,5 +1,5 @@
 use std::borrow::Borrow;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 fn main() {
     let search_term = "are";
@@ -14,9 +14,7 @@ fn main() {
 #[derive(Default)]
 struct Grepy<'a> {
     /// Matches: exact lines
-    simple_matches: HashMap<usize, &'a str>,
-    /// Matches: exact lines and their surrounding lines
-    extended_matches: HashMap<usize, Vec<&'a str>>,
+    matches: BTreeMap<usize, &'a str>,
 }
 
 impl<'a> Grepy<'a> {
@@ -24,18 +22,8 @@ impl<'a> Grepy<'a> {
         Default::default()
     }
 
-    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &HashMap<usize, &'a str> {
-        let mut simple_matches = HashMap::new();
-
+    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &BTreeMap<usize, &'a str> {
         self.find_matches_extended(needle, haystack, 0)
-            .iter()
-            .for_each(|(k, v)| {
-                simple_matches.insert(k.to_owned(), *v.get(0).unwrap());
-            });
-
-        self.simple_matches = simple_matches;
-
-        self.simple_matches.borrow()
     }
 
     fn find_matches_extended(
@@ -43,75 +31,40 @@ impl<'a> Grepy<'a> {
         needle: &'a str,
         haystack: &'a str,
         surrounding_lines_count: usize,
-    ) -> &HashMap<usize, &'a str> {
-        let mut matched_lines: Vec<GrepyMatch> = Vec::new();
+    ) -> &BTreeMap<usize, &'a str> {
+        let list_of_matches: BTreeMap<_, _> = haystack
+            .lines()
+            .enumerate()
+            // first, let's see which lines are relevant for the matching operation
+            .filter_map(|(line_idx, line)| {
+                if line.contains(&needle) == false {
+                    return None;
+                }
 
-        // first, let's see which lines are relevant for the matching operation
-        for (i, line) in haystack.lines().enumerate() {
-            if line.contains(&needle) {
                 let matched_line = match surrounding_lines_count {
-                    0 => GrepyMatch::SimpleMatch(i),
-                    _ => GrepyMatch::ExtendedMatch(
-                        i.saturating_sub(surrounding_lines_count),
-                        i.saturating_add(surrounding_lines_count),
-                    ),
+                    0 => vec![line_idx],
+                    _ => {
+                        let line_from_idx = line_idx.saturating_sub(surrounding_lines_count);
+                        let line_to_idx = line_idx.saturating_add(surrounding_lines_count);
+
+                        (line_from_idx..=line_to_idx).collect::<Vec<_>>()
+                    }
                 };
 
-                matched_lines.push(matched_line);
-            }
-        }
-
-        let lines_per_match = surrounding_lines_count * 2 + 1;
-
-        let all_matching_lines: Vec<usize> = matched_lines
-            .iter()
-            .map(|matched_line| match *matched_line {
-                GrepyMatch::SimpleMatch(line_idx) => {
-                    vec![line_idx]
-                }
-                GrepyMatch::ExtendedMatch(line_idx_from, line_idx_to) => {
-                    (line_idx_from..=line_idx_to).collect::<Vec<_>>()
-                }
+                Some(matched_line)
             })
             .flatten()
-            .map()
+            // and then get the relevant lines from text
+            .filter_map(|line_idx| match haystack.lines().nth(line_idx) {
+                None => None,
+                Some(line) => Some((line_idx, line)),
+            })
             .collect();
 
-        // let mut extended_matches: HashMap<usize, Vec<String>> =
-        //     haystack.lines().enumerate().filter(|&(idx, _)| {});
-        //     for matched_line in matched_lines.iter() {
-        //         let mut output_lines = Vec::with_capacity(lines_per_match);
-        //
-        //         match *matched_line {
-        //             GrepyMatch::SimpleMatch(line_idx) => {
-        //                 if i == line_idx {
-        //                     output_lines.push(line);
-        //                     extended_matches.insert(line_idx, output_lines);
-        //                 }
-        //             }
-        //             GrepyMatch::ExtendedMatch(line_idx_from, line_idx_to) => {
-        //                 if i >= line_idx_from || i <= line_idx_to {
-        //                     output_lines.push(line)
-        //                 }
-        //
-        //                 if i == line_idx_to {
-        //                     extended_matches
-        //                         .insert(line_idx_to - surrounding_lines_count, output_lines);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        self.matches = list_of_matches;
 
-        // self.extended_matches = extended_matches;
-
-        self.extended_matches.borrow()
+        self.matches.borrow()
     }
-}
-
-enum GrepyMatch {
-    SimpleMatch(usize),
-    ExtendedMatch(usize, usize),
 }
 
 #[cfg(test)]
@@ -148,27 +101,23 @@ mod test {
         let mut grepy = Grepy::new();
         let surrounding_lines_count = 1;
 
-        let matches = grepy
-            .find_matches_extended("example", THE_QUOTE, surrounding_lines_count)
-            .clone();
+        let matches = grepy.find_matches_extended("example", THE_QUOTE, surrounding_lines_count);
 
-        assert_eq!(matches.len(), 2);
-
-        let lines_per_match = surrounding_lines_count * 2 + 1;
-
-        matches.iter().for_each(|(_, v)| {
-            assert!(v.len() <= lines_per_match);
-            assert_eq!(v.capacity(), lines_per_match);
-        });
-
-        let first_match = matches.get(&8).unwrap();
+        let matched_lines: String = matches
+            .iter()
+            .map(|(_, s)| &**s)
+            .collect::<Vec<_>>()
+            .join("\n");
 
         assert_eq!(
-            format!("s1{:?}", first_match.join("")),
+            matched_lines,
             "\
 It's easy to make a statement correct by making it vague. That's a common flaw in academic writing,
 for example. If you know nothing at all about an issue, you can't go wrong by saying that
-the issue is a complex one, that there are many factors to be considered,"
+the issue is a complex one, that there are many factors to be considered,
+
+For example, it's more useful to say that Pike's Peak is near the middle of Colorado than
+merely somewhere in Colorado. But if I say it's in the exact middle of Colorado,"
         );
     }
 }
