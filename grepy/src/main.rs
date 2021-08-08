@@ -1,14 +1,21 @@
+use regex::Regex;
 use std::borrow::Borrow;
 use std::collections::BTreeMap;
 
 fn main() {
-    let search_term = "are";
+    let search_term = Regex::new("are").unwrap();
+    let grepy_needle = GrepyNeedle::Regex(&search_term);
     let quote = THE_QUOTE;
 
     let mut grepy = Grepy::new();
-    let matches = grepy.find_matches(&search_term, &quote);
+    let matches = grepy.find_matches(&grepy_needle, &quote);
 
     println!("Matches: {:?}", matches);
+}
+
+enum GrepyNeedle<'a> {
+    PlainText(&'a str),
+    Regex(&'a Regex),
 }
 
 #[derive(Default)]
@@ -22,13 +29,17 @@ impl<'a> Grepy<'a> {
         Default::default()
     }
 
-    fn find_matches(&mut self, needle: &'a str, haystack: &'a str) -> &BTreeMap<usize, &'a str> {
+    fn find_matches(
+        &mut self,
+        needle: &'a GrepyNeedle<'a>,
+        haystack: &'a str,
+    ) -> &BTreeMap<usize, &'a str> {
         self.find_matches_extended(needle, haystack, 0)
     }
 
     fn find_matches_extended(
         &mut self,
-        needle: &'a str,
+        needle: &'a GrepyNeedle<'a>,
         haystack: &'a str,
         surrounding_lines_count: usize,
     ) -> &BTreeMap<usize, &'a str> {
@@ -37,7 +48,12 @@ impl<'a> Grepy<'a> {
             .enumerate()
             // first, let's see which lines are relevant for the matching operation
             .filter_map(|(line_idx, line)| {
-                if line.contains(&needle) == false {
+                let no_match_in_current_line = match needle {
+                    GrepyNeedle::PlainText(needle) => line.contains(needle) == false,
+                    GrepyNeedle::Regex(regex) => (*regex).find(line).is_none(),
+                };
+
+                if no_match_in_current_line {
                     return None;
                 }
 
@@ -74,7 +90,8 @@ mod test {
     #[test]
     fn it_finds_results_by_exact_match_when_available() {
         let mut grepy = Grepy::new();
-        let matches = grepy.find_matches("are", THE_QUOTE);
+        let grepy_needle = GrepyNeedle::PlainText("are");
+        let matches = grepy.find_matches(&grepy_needle, THE_QUOTE);
 
         // check number of matches
         assert_eq!(matches.len(), 3);
@@ -85,13 +102,16 @@ mod test {
             &"the issue is a complex one, that there are many factors to be considered,",
         );
 
-        assert_eq!(grepy.find_matches("ambitious", THE_QUOTE).len(), 1,);
+        let grepy_needle = GrepyNeedle::PlainText("ambitious");
+
+        assert_eq!(grepy.find_matches(&grepy_needle, THE_QUOTE).len(), 1,);
     }
 
     #[test]
     fn it_finds_no_results_by_when_not_available() {
         let mut grepy = Grepy::new();
-        let matches = grepy.find_matches("are not", THE_QUOTE);
+        let grepy_needle = GrepyNeedle::PlainText("are not");
+        let matches = grepy.find_matches(&grepy_needle, THE_QUOTE);
 
         assert_eq!(matches.len(), 0);
     }
@@ -100,8 +120,10 @@ mod test {
     fn it_includes_surrounding_lines_for_context_when_needed() {
         let mut grepy = Grepy::new();
         let surrounding_lines_count = 1;
+        let grepy_needle = GrepyNeedle::PlainText("example");
 
-        let matches = grepy.find_matches_extended("example", THE_QUOTE, surrounding_lines_count);
+        let matches =
+            grepy.find_matches_extended(&grepy_needle, THE_QUOTE, surrounding_lines_count);
 
         let matched_lines: String = matches
             .iter()
@@ -119,6 +141,16 @@ the issue is a complex one, that there are many factors to be considered,
 For example, it's more useful to say that Pike's Peak is near the middle of Colorado than
 merely somewhere in Colorado. But if I say it's in the exact middle of Colorado,"
         );
+    }
+
+    #[test]
+    fn it_finds_results_by_when_provided_with_regex() {
+        let mut grepy = Grepy::new();
+        let search_term = Regex::new(r"(?mUi)co[\w]+(n|r)").unwrap();
+        let grepy_needle = GrepyNeedle::Regex(&search_term);
+        let matches = grepy.find_matches(&grepy_needle, THE_QUOTE);
+
+        assert_eq!(matches.len(), 9);
     }
 }
 
