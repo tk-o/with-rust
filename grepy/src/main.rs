@@ -1,16 +1,34 @@
+use clap::{App, Arg};
 use regex::Regex;
-use std::borrow::Borrow;
-use std::collections::BTreeMap;
+use std::{borrow::Borrow, collections::BTreeMap};
+
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 fn main() {
-    let search_term = Regex::new("are").unwrap();
+    let args = App::new("grepy")
+        .version(VERSION)
+        .about("searches for patterns")
+        .arg(
+            Arg::new("pattern")
+                .about("The pattern to search for")
+                .short('p')
+                .takes_value(true)
+                .required(true),
+        )
+        .get_matches();
+
+    let arg_pattern = args.value_of("pattern").unwrap();
+    let search_term = Regex::new(arg_pattern).unwrap();
     let grepy_needle = GrepyNeedle::Regex(&search_term);
     let quote = THE_QUOTE;
 
     let mut grepy = Grepy::new();
     let matches = grepy.find_matches(&grepy_needle, &quote);
 
-    println!("Matches: {:?}", matches);
+    println!("Found {} matching lines:\n", &matches.len());
+    for (line_idx, line) in matches {
+        println!("#{}: {}", line_idx, line);
+    }
 }
 
 enum GrepyNeedle<'a> {
