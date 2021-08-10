@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::{App, Arg};
 use regex::Regex;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::{stdin, BufRead, BufReader};
 use std::{borrow::Borrow, collections::BTreeMap};
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -21,18 +21,25 @@ fn main() -> Result<()> {
             Arg::new("input")
                 .about("File to search")
                 .takes_value(true)
-                .required(true),
+                .required(false),
         )
         .get_matches();
-
-    let arg_input = args.value_of("input").expect("arg must be provided");
-    let input_file = File::open(arg_input)?;
-    let reader = BufReader::new(input_file);
 
     let arg_pattern = args.value_of("pattern").expect("arg must be provided");
     let search_term = Regex::new(arg_pattern)?;
     let grepy_needle = GrepyNeedle::Regex(&search_term);
 
+    match args.value_of("input") {
+        Some(arg_input) => {
+            let input_file = File::open(arg_input)?;
+
+            process_lines(BufReader::new(input_file), grepy_needle)
+        }
+        None => process_lines(stdin().lock(), grepy_needle),
+    }
+}
+
+fn process_lines<T: BufRead>(reader: T, grepy_needle: GrepyNeedle) -> Result<()> {
     for (line_idx, line_) in reader.lines().enumerate() {
         let line = line_?;
         let mut grepy = Grepy::new();
