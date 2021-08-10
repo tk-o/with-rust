@@ -1,34 +1,49 @@
+use anyhow::Result;
 use clap::{App, Arg};
 use regex::Regex;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 use std::{borrow::Borrow, collections::BTreeMap};
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
-fn main() {
+fn main() -> Result<()> {
     let args = App::new("grepy")
-        .version(VERSION)
+        .version(env!("CARGO_PKG_VERSION"))
         .about("searches for patterns")
         .arg(
             Arg::new("pattern")
                 .about("The pattern to search for")
-                .short('p')
+                .takes_value(true)
+                .required(true),
+        )
+        .arg(
+            Arg::new("input")
+                .about("File to search")
                 .takes_value(true)
                 .required(true),
         )
         .get_matches();
 
-    let arg_pattern = args.value_of("pattern").unwrap();
-    let search_term = Regex::new(arg_pattern).unwrap();
+    let arg_input = args.value_of("input").expect("arg must be provided");
+    let input_file = File::open(arg_input)?;
+    let reader = BufReader::new(input_file);
+
+    let arg_pattern = args.value_of("pattern").expect("arg must be provided");
+    let search_term = Regex::new(arg_pattern)?;
     let grepy_needle = GrepyNeedle::Regex(&search_term);
-    let quote = THE_QUOTE;
 
-    let mut grepy = Grepy::new();
-    let matches = grepy.find_matches(&grepy_needle, &quote);
+    for (line_idx, line_) in reader.lines().enumerate() {
+        let line = line_?;
+        let mut grepy = Grepy::new();
+        let matches = grepy.find_matches(&grepy_needle, &line);
 
-    println!("Found {} matching lines:\n", &matches.len());
-    for (line_idx, line) in matches {
-        println!("#{}: {}", line_idx, line);
+        if matches.is_empty() == false {
+            println!("#{}: {}", line_idx, line);
+        }
     }
+
+    Ok(())
 }
 
 enum GrepyNeedle<'a> {
