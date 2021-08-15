@@ -1,3 +1,4 @@
+use crate::file::File as MyFile;
 use anyhow::Result;
 use clap::{App, Arg};
 use regex::Regex;
@@ -5,9 +6,29 @@ use std::fs::File;
 use std::io::{stdin, BufRead, BufReader};
 use std::{borrow::Borrow, collections::BTreeMap};
 
+mod file;
+
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 fn main() -> Result<()> {
+    let file_data: &[u8] = &[114, 117, 115, 116, 33];
+    let mut my_file = MyFile::new("f1.txt", file_data);
+
+    my_file.open();
+
+    let mut data_buffer = vec![];
+    let my_file_length = my_file.read(&mut data_buffer);
+
+    my_file.close();
+
+    let text = String::from_utf8_lossy(&data_buffer);
+
+    println!("{:?}", my_file);
+    println!("{} is {} bytes long", &my_file.get_name(), my_file_length);
+    println!("{}", text);
+
+    return Ok(());
+
     let args = App::new("grepy")
         .version(env!("CARGO_PKG_VERSION"))
         .about("searches for patterns")
