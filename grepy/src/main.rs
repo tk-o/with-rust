@@ -14,12 +14,12 @@ fn main() -> Result<()> {
     let file_data: &[u8] = &[114, 117, 115, 116, 33];
     let mut my_file = MyFile::new("f1.txt", file_data);
 
-    my_file.open();
+    // my_file.open()?;
 
     let mut data_buffer = vec![];
-    let my_file_length = my_file.read(&mut data_buffer);
+    let my_file_length = my_file.read(&mut data_buffer)?;
 
-    my_file.close();
+    my_file.close()?;
 
     let text = String::from_utf8_lossy(&data_buffer);
 
