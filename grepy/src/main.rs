@@ -1,5 +1,5 @@
 use crate::file::File as MyFile;
-use anyhow::Result;
+use anyhow::{Error, Result};
 use clap::{App, Arg};
 use regex::Regex;
 use std::fs::File;
@@ -14,14 +14,19 @@ fn main() -> Result<()> {
     let file_data: &[u8] = &[114, 117, 115, 116, 33];
     let mut my_file = MyFile::new("f1.txt", file_data);
 
-    // my_file.open()?;
+    let mut data_read_buffer = vec![];
 
-    let mut data_buffer = vec![];
-    let my_file_length = my_file.read(&mut data_buffer)?;
+    if my_file.read(&mut data_read_buffer).is_err() {
+        println!("Reading file did not go well here...");
+    }
+
+    my_file.open()?;
+
+    let my_file_length = my_file.read(&mut data_read_buffer)?;
 
     my_file.close()?;
 
-    let text = String::from_utf8_lossy(&data_buffer);
+    let text = String::from_utf8_lossy(&data_read_buffer);
 
     println!("{:?}", my_file);
     println!("{} is {} bytes long", &my_file.get_name(), my_file_length);

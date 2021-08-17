@@ -1,4 +1,5 @@
 use anyhow::{anyhow, Error};
+use std::alloc::Global;
 
 #[derive(Debug, PartialEq)]
 pub enum FileState {
@@ -13,7 +14,19 @@ pub struct File {
     state: FileState,
 }
 
+trait Read {
+    fn read(&mut self, buffer: &mut Vec<u8>) -> Result<usize, Error>;
+}
+
 impl File {
+    /// Creates a new `File`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let file_data: &[u8] = &[114, 117, 115, 116, 33];
+    /// let my_file = MyFile::new("f1.txt", file_data);
+    /// ```
     pub fn new(name: &str, data: &[u8]) -> Self {
         Self {
             name: String::from(name),
@@ -32,7 +45,13 @@ impl File {
         Ok(true)
     }
 
-    pub fn read(&mut self, buffer: &mut Vec<u8>) -> Result<usize, Error> {
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+}
+
+impl Read for File {
+    fn read(&mut self, buffer: &mut Vec<u8>) -> Result<usize, Error> {
         if self.state != FileState::Open {
             return Err(anyhow!("File was not open while trying to read from it"));
         }
@@ -44,9 +63,5 @@ impl File {
         buffer.append(&mut data);
 
         Ok(read_length)
-    }
-
-    pub fn get_name(&self) -> &str {
-        &self.name
     }
 }
