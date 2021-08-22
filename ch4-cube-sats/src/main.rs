@@ -1,27 +1,25 @@
+use std::cell::RefCell;
+use std::rc::Rc;
+
 fn main() {
-    let mut mail = Mailbox { messages: vec![] };
+    let base = Rc::new(RefCell::new(GroundStation { radio_freq: 87.65 }));
 
-    let base = GroundStation;
+    println!("base: {:?}", base);
 
-    let sat_ids = fetch_sat_ids();
-
-    for sat_id in sat_ids {
-        let sat = base.connect(sat_id);
-        let msg = Message {
-            to: sat_id,
-            content: String::from("hello"),
-        };
-        base.send(&mut mail, msg);
+    {
+        // introduce a new scope
+        let mut base_2 = base.borrow_mut();
+        base_2.radio_freq -= 12.34;
+        println!("base_2: {:?}", base_2);
     }
 
-    let sat_ids = fetch_sat_ids();
+    println!("base: {:?}", base);
 
-    for sat_id in sat_ids {
-        let sat = base.connect(sat_id);
+    let mut base_3 = base.borrow_mut();
+    base_3.radio_freq += 43.21;
 
-        let msg = sat.recv(&mut mail);
-        println!("{:?}: {:?}", sat, msg);
-    }
+    println!("base: {:?}", base);
+    println!("base_3: {:?}", base_3);
 }
 
 #[derive(Debug)]
@@ -29,7 +27,10 @@ enum StatusMessage {
     Ok,
 }
 
-struct GroundStation;
+#[derive(Debug)]
+struct GroundStation {
+    radio_freq: f64, // Mhz
+}
 
 impl GroundStation {
     fn send(&self, mailbox: &mut Mailbox, msg: Message) {
